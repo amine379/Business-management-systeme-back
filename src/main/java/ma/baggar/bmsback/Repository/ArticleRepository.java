@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import ma.baggar.bmsback.Entity.Article;
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
-
+Article findByName(String name);
 }

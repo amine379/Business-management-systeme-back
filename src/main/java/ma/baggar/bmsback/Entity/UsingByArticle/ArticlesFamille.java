@@ -19,14 +19,13 @@ import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesFamille;
 @Entity
 @Data
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter
-public class ArticlesFamille {
+public class  ArticlesFamille {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 @Column(nullable = true)
-private String familyname;
-@Column(nullable = true)
+private String name;
 @OneToMany(mappedBy = "articleFamille",fetch = FetchType.LAZY)
 private List<ArticlesSousFamilles> articlesSousFamilles;
 @OneToMany(mappedBy = "articleFamille",fetch = FetchType.LAZY)
-private Article article;
+private List<Article> article;
 }

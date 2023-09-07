@@ -1,5 +1,7 @@
 package ma.baggar.bmsback.Entity.UsingByArticle;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,5 +22,5 @@ public class ArticlesUnite {
 	@Column(nullable = false)
 private String name;
 	@OneToMany(mappedBy = "unite",fetch = FetchType.LAZY)
-	private Article article;
+	private List<Article> article;
 }

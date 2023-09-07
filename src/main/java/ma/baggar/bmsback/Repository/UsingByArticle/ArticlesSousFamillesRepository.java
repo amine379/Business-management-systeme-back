@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesSousFamilles;
 @Repository
 public interface ArticlesSousFamillesRepository extends JpaRepository<ArticlesSousFamilles, Integer> {
-
+ArticlesSousFamilles findById(int id);
 }

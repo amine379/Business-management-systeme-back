@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import ma.baggar.bmsback.Entity.Fournisseur;
 @Repository
 public interface FournisseurRepository extends JpaRepository<Fournisseur, Integer>{
-
+Fournisseur findById(int id);
 }

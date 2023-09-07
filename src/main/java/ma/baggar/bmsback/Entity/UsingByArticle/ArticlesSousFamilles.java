@@ -22,8 +22,8 @@ public class ArticlesSousFamilles {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(nullable = true)
-private String soudFamille;
-	@Column(nullable = true)
+private String name;
+
 @ManyToOne
 private ArticlesFamille articleFamille;
 	@OneToMany(mappedBy ="articleSousFamilles",fetch = FetchType.LAZY )

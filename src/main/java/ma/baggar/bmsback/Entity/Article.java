@@ -1,6 +1,8 @@
 package ma.baggar.bmsback.Entity;
 
 import java.util.List;
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,9 +42,10 @@ public class Article {
 	private Double selling_price;
 	@Column(nullable =true,unique = false)
 	private Double tva;
+	@Column(nullable = true)
+	private boolean active;
 	@Column(nullable = false)
 	private float Stock=0;
-	
 	@ManyToOne
 	private ArticlesUnite unite;
 	@ManyToOne
@@ -53,8 +56,12 @@ public class Article {
 	@JoinTable(name="fournisseur-articles")
 	private List<Fournisseur> fournisseur;
 	@ManyToMany(mappedBy = "articles",fetch = FetchType.EAGER)
-
-	private List<Agence> agence;
+    private List<Agence> agence;
 	@ManyToMany(mappedBy = "articles",fetch = FetchType.EAGER)
 	private List<Reception> reception;
-}
+
+	}
+	
+	
+	
+
