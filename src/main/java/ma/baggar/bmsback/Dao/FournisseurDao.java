@@ -7,6 +7,7 @@ import ma.baggar.bmsback.Entity.Fournisseur;
 
 public interface FournisseurDao {
 FournisseurDto CreateFournisseur(FournisseurDto fournisseurDto);
+FournisseurDto addAgencesToFournisseur(int FournisseurId,List<Integer> agenceIds);
 List<FournisseurDto> getAllFournisseur();
 FournisseurDto getFournisseurByName(String name);
 FournisseurDto getFournisseurByStatus(boolean status);

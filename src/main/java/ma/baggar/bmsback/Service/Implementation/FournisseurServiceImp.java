@@ -22,5 +22,10 @@ FournisseurDao fournisseurDao;
 		// TODO Auto-generated method stub
 		return fournisseurDao.getAllFournisseur();
 	}
+	@Override
+	public FournisseurDto addAgencesToFournisseur(int fournisseuId, List<Integer> agencesIds) {
+		
+		return fournisseurDao.addAgencesToFournisseur(fournisseuId, agencesIds);
+	}
 
 }

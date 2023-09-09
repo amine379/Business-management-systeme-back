@@ -9,12 +9,16 @@ import org.springframework.stereotype.Repository;
 
 import ma.baggar.bmsback.Dao.FournisseurDao;
 import ma.baggar.bmsback.Dto.FournisseurDto;
+import ma.baggar.bmsback.Entity.Agence;
 import ma.baggar.bmsback.Entity.Fournisseur;
+import ma.baggar.bmsback.Repository.AgenceRepository;
 import ma.baggar.bmsback.Repository.FournisseurRepository;
 @Repository
 public class FournisseurDaoImp implements FournisseurDao{
 	@Autowired
 FournisseurRepository fournisseurRepository;
+	@Autowired
+	AgenceRepository agenceRepository;
 	@Override
 	public FournisseurDto CreateFournisseur(FournisseurDto fournisseurDto) {
 		ModelMapper modelMapper=new ModelMapper();
@@ -59,6 +63,21 @@ FournisseurRepository fournisseurRepository;
 		Fournisseur fournisseurToCheck= fournisseurRepository.findByNom(fournisseur.getNom());
 		
 		return (fournisseurToCheck!=null );
+	}
+
+	@Override
+	public FournisseurDto addAgencesToFournisseur(int FournisseurId, List<Integer> agenceIds) {
+		Fournisseur fournisseur=fournisseurRepository.findById(FournisseurId);
+		if(checkifFournisseurExist(fournisseur)) {
+			ModelMapper modelMapper=new ModelMapper();
+			List<Agence> agences=agenceRepository.findAllById(agenceIds);
+			fournisseur.setAgences(agences);
+			Fournisseur fournisseurUpdated= fournisseurRepository.save(fournisseur);
+			FournisseurDto fournisseurDto=modelMapper.map(fournisseurUpdated, FournisseurDto.class);
+			return fournisseurDto;
+		}
+		else
+		return null;
 	}
 
 }

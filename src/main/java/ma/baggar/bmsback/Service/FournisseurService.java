@@ -6,5 +6,6 @@ import ma.baggar.bmsback.Dto.FournisseurDto;
 
 public interface FournisseurService {
 FournisseurDto CreateFournisseur(FournisseurDto fournisseurDto);
+FournisseurDto addAgencesToFournisseur(int fournisseuId,List<Integer> agencesIds);
 List<FournisseurDto> getAllFournisseurs();
 }
