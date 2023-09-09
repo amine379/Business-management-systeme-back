@@ -7,4 +7,5 @@ import ma.baggar.bmsback.Entity.Fournisseur;
 @Repository
 public interface FournisseurRepository extends JpaRepository<Fournisseur, Integer>{
 Fournisseur findById(int id);
+Fournisseur findByNom(String nom);
 }

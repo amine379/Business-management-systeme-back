@@ -21,7 +21,7 @@ import ma.baggar.bmsback.Service.ArticleService;
 
 
 @RestController
-@RequestMapping("/aricle")
+@RequestMapping("api/aricle")
 public class ArticleController {
 	@Autowired
 	ArticleService articleService;
