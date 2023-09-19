@@ -5,7 +5,7 @@ import java.util.List;
 import ma.baggar.bmsback.Dto.FournisseurDto;
 
 public interface FournisseurService {
-FournisseurDto CreateFournisseur(FournisseurDto fournisseurDto);
+	FournisseurDto CreateFournisseur(FournisseurDto fournisseurDtos);
 FournisseurDto addAgencesToFournisseur(int fournisseuId,List<Integer> agencesIds);
 List<FournisseurDto> getAllFournisseurs();
 }

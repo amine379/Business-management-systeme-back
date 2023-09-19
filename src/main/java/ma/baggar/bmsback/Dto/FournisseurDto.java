@@ -21,4 +21,5 @@ public class FournisseurDto {
 	private List<Article> articles;
 	private List<Reception> Receptions;
 	private List<Agence> agences;
+	private List<Integer> agenceIds;
 }

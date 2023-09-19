@@ -4,11 +4,13 @@ import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ma.baggar.bmsback.Entity.Article;
 import ma.baggar.bmsback.Entity.Fournisseur;
 import ma.baggar.bmsback.Entity.Reception;
-@Data @AllArgsConstructor @NoArgsConstructor
+@Data @AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class AgenceDto {
 	private int id;
 	private String name;

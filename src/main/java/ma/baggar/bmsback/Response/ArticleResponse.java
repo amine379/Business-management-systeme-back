@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ma.baggar.bmsback.Entity.Agence;
 import ma.baggar.bmsback.Entity.Fournisseur;
+import ma.baggar.bmsback.Entity.TvaEntity;
 import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesFamille;
 import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesSousFamilles;
 import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesUnite;
@@ -19,7 +20,7 @@ public class ArticleResponse {
 	private String name;
 	private Double purchase_price;
 	private Double selling_price;
-	private Double tva;
+	private TvaEntity tva;
 	private float Stock;
 	private boolean active;
 	private ArticlesUnite unite;

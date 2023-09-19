@@ -15,7 +15,7 @@ import ma.baggar.bmsback.Request.UniteRequest;
 import ma.baggar.bmsback.Response.UniteResponse;
 import ma.baggar.bmsback.Service.UsingByArticle.ServiceArticleUnite;
 @RestController
-@RequestMapping("/unite")
+@RequestMapping("/api/unite")
 public class ArticleUniteController {
 	@Autowired
 ServiceArticleUnite serviceArticleUnite;

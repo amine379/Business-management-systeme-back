@@ -7,11 +7,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
@@ -19,7 +21,7 @@ import ma.baggar.bmsback.Dto.FournisseurDto;
 import ma.baggar.bmsback.Request.FournisseurRequest;
 import ma.baggar.bmsback.Response.FournisseurResponse;
 import ma.baggar.bmsback.Service.FournisseurService;
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("api/fournisseur")
 public class FournisseurController {
@@ -44,12 +46,5 @@ public ResponseEntity<FournisseurResponse> saveFournisseur(@RequestBody @Valid F
 	FournisseurDto fournisseurDtoToSave=fournisseurService.CreateFournisseur(fournisseurDto);
 	FournisseurResponse fournisseurResponse=modelMapper.map(fournisseurDtoToSave, FournisseurResponse.class);
 	return new ResponseEntity<FournisseurResponse>(fournisseurResponse , HttpStatus.CREATED)  ;	
-}
-@PostMapping("/{fournisseuId}/add-agences")
-public ResponseEntity<FournisseurResponse> addAgencesToFournisseur(@PathVariable int fournisseurId,@RequestBody List<Integer> agencesIds){
-	ModelMapper modelMapper=new ModelMapper();
-	FournisseurDto fournisseurDto=fournisseurService.addAgencesToFournisseur(fournisseurId, agencesIds);
-	FournisseurResponse fournisseurResponse=modelMapper.map(fournisseurDto, FournisseurResponse.class);
-	return new ResponseEntity<FournisseurResponse>(fournisseurResponse , HttpStatus.CREATED)  ;
 }
 }

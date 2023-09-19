@@ -5,5 +5,8 @@ import java.util.List;
 import ma.baggar.bmsback.Dto.ArticleDto;
 
 public interface ArticleService {
-ArticleDto createArticle(ArticleDto articleDto,int id_unite,int id_famille,int id_sousFamille,List<Integer> agenceIds,List<Integer> fournisseurIds);
+ArticleDto createArticle(ArticleDto articleDto);
+List<ArticleDto> getAllArticles();
+ArticleDto gatArticleByName(String name);
+ArticleDto gatArticleById(Long id);
 }

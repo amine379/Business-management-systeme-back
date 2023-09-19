@@ -1,6 +1,8 @@
 package ma.baggar.bmsback.Entity;
 
-import java.sql.Date;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -33,20 +35,22 @@ public class Reception {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 	@Column(nullable = false)
-	private Date date_doc;
-	private Date date_echeance;
-	@Column(name = "Prix-HT" ,nullable = false)
-	private Double prix_Ht;
-	@Column(name = "Prix-TTC" ,nullable = false)
-	private Double prix_TTC;
+	private Date dateDoc;
+	private Date dateEcheance;
+	@Column(name = "Toatal-HT" ,nullable = false)
+	private Double totalHt;
+	@Column(name = "total-TTC" ,nullable = false)
+	private Double totalTtc;
+	@Column(nullable = false)
+	private List<Double> prixTtc=new ArrayList<>();
 	@Column(nullable = true)
 	private Double Remise;
 	@Column(nullable = true)
 	private String Remarque;
 	@Column(nullable = true)
-	private Double tva;
-	@Column(nullable = true)
 	private Double fret;
+	@Column(nullable = false)
+	private List<Double> quantite=new ArrayList<>();
 	@ManyToOne
 	@JoinColumn(name = "agence_id",nullable = false)
 	private Agence agence;

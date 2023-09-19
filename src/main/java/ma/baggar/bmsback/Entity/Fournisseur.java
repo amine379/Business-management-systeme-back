@@ -8,6 +8,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -44,11 +46,18 @@ private int id;
 	private String countrie;
 	@ManyToMany(mappedBy = "fournisseur",fetch = FetchType.EAGER)
 	private List<Article> articles;
-	@Column(nullable = true)
+	
 	@OneToMany(mappedBy = "fournisseur",cascade = CascadeType.ALL)
 	private List<Reception> Receptions;
 	@Column(nullable =true)
-	@ManyToMany(mappedBy = "fournisseur",fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY,
+		      cascade = {
+		              CascadeType.PERSIST,
+		              CascadeType.MERGE
+		          })
+	@JoinTable(name = "agence_fournisseurs",
+	joinColumns=@JoinColumn(name="fournisseur_id"),
+	inverseJoinColumns=@JoinColumn(name="agence_id"))
 	
 	private List<Agence> agences;
 

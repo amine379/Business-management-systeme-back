@@ -12,11 +12,13 @@ import ma.baggar.bmsback.Service.FournisseurService;
 public class FournisseurServiceImp implements FournisseurService{
 	@Autowired
 FournisseurDao fournisseurDao;
-	@Override
-	public FournisseurDto CreateFournisseur(FournisseurDto fournisseurDto) {
-		
-		return fournisseurDao.CreateFournisseur(fournisseurDto);
-	}
+	
+	/*
+	 * public FournisseurDto CreateFournisseur(FournisseurDto
+	 * fournisseurDto,List<Integer> agenceIds) {
+	 * 
+	 * return fournisseurDao.CreateFournisseur(fournisseurDto,agenceIds); }
+	 */
 	@Override
 	public List<FournisseurDto> getAllFournisseurs() {
 		// TODO Auto-generated method stub
@@ -24,8 +26,14 @@ FournisseurDao fournisseurDao;
 	}
 	@Override
 	public FournisseurDto addAgencesToFournisseur(int fournisseuId, List<Integer> agencesIds) {
-		
-		return fournisseurDao.addAgencesToFournisseur(fournisseuId, agencesIds);
+		// TODO Auto-generated method stub
+		return null;
 	}
+	@Override
+	public FournisseurDto CreateFournisseur(FournisseurDto fournisseurDtos) {
+		// TODO Auto-generated method stub
+		return fournisseurDao.CreateFournisseur(fournisseurDtos);
+	}
+
 
 }

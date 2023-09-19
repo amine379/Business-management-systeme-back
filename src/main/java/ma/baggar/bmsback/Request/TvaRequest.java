@@ -1,7 +1,5 @@
 package ma.baggar.bmsback.Request;
 
-
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.NotNull;
@@ -9,12 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-@Data @AllArgsConstructor @NoArgsConstructor @Getter @Setter
-public class AgenceRequest {
+@Data @AllArgsConstructor @NoArgsConstructor @Getter
+public class TvaRequest {
 	@JsonProperty("id")
-	private int id;
-@NotNull
-private String name;
-
+	private Long id;
+	@NotNull
+private String code;
+	@NotNull
+private Double value;
 }

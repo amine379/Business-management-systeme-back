@@ -9,15 +9,14 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesFamille;
 import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesSousFamilles;
 import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesUnite;
@@ -26,8 +25,6 @@ import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesUnite;
 @Entity
 @Data
 @AllArgsConstructor
-@Getter
-@Setter
 @NoArgsConstructor
 @Table(name = "Article")
 public class Article {
@@ -40,17 +37,21 @@ public class Article {
 	private Double purchase_price;
 	@Column(name ="Prix_vente")
 	private Double selling_price;
-	@Column(nullable =true,unique = false)
-	private Double tva;
+	@ManyToOne
+	@JoinColumn(name = "tva_id",nullable = false)
+	private TvaEntity tva;
 	@Column(nullable = true)
-	private boolean active;
+	private boolean situation;
 	@Column(nullable = false)
 	private float Stock=0;
 	@ManyToOne
+	@JoinColumn(name = "unite_id",nullable = false)
 	private ArticlesUnite unite;
 	@ManyToOne
+	@JoinColumn(name = "articleFamille_id",nullable = false)
 	private ArticlesFamille articleFamille;
-	@ManyToOne
+	@ManyToOne 
+	@JoinColumn(name = "articleSousFamille_id",nullable = false)
 	private ArticlesSousFamilles articleSousFamilles;
 	@ManyToMany (fetch = FetchType.EAGER)
 	@JoinTable(name="fournisseur-articles")

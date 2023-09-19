@@ -13,9 +13,24 @@ public class ArtcileServiceImp implements ArticleService {
 	@Autowired
 ArticleDao articleDao;
 	@Override
-	public ArticleDto createArticle(ArticleDto articleDto,int id_unite,int id_famille,int id_sousFamille,List<Integer> agenceIds,List<Integer> fournisseurIds) {
+	public ArticleDto createArticle(ArticleDto articleDto) {
 		
-		return articleDao.createArticle(articleDto, id_unite, id_famille, id_sousFamille, agenceIds, fournisseurIds);
+		return articleDao.createArticle(articleDto);
+	}
+	@Override
+	public List<ArticleDto> getAllArticles() {
+		// TODO Auto-generated method stub
+		return articleDao.getAllArticles();
+	}
+	@Override
+	public ArticleDto gatArticleByName(String name) {
+		// TODO Auto-generated method stub
+		return articleDao.gatArticleByName(name);
+	}
+	@Override
+	public ArticleDto gatArticleById(Long id) {
+		// TODO Auto-generated method stub
+		return articleDao.gatArticleById(id);
 	}
 
 }

@@ -1,6 +1,10 @@
 package ma.baggar.bmsback.Entity;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,16 +17,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import jakarta.persistence.JoinColumn;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter@Setter
 @Table(name="Agence")
 public class Agence {
 	@Id
@@ -31,17 +32,22 @@ private int id;
 
 	@Column(nullable = false,unique=true)
 private String name;
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "agence_fournisseurs",
-	joinColumns=@JoinColumn(name="agence_id"),
-	inverseJoinColumns=@JoinColumn(name="fournisseur_id"))
+	@JsonIgnore
+	  @ManyToMany(fetch = FetchType.LAZY,
+		      cascade = {
+		          CascadeType.PERSIST,
+		          CascadeType.MERGE
+		      },
+		      mappedBy = "agences")
 private List<Fournisseur> fournisseur;
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="Agence-articles",
 	joinColumns=@JoinColumn(name="agence_id"),
 	inverseJoinColumns=@JoinColumn(name="aricle_id")
 	)
 private List<Article> articles;
+	@JsonIgnore
 	@OneToMany(mappedBy = "agence",fetch = FetchType.LAZY)
 private List<Reception> receptions;
 }

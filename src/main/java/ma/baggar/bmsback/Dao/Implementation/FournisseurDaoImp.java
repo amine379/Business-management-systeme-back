@@ -19,20 +19,6 @@ public class FournisseurDaoImp implements FournisseurDao{
 FournisseurRepository fournisseurRepository;
 	@Autowired
 	AgenceRepository agenceRepository;
-	@Override
-	public FournisseurDto CreateFournisseur(FournisseurDto fournisseurDto) {
-		ModelMapper modelMapper=new ModelMapper();
-		Fournisseur fournisseur =modelMapper.map(fournisseurDto, Fournisseur.class);
-		
-		  if(checkifFournisseurExist(fournisseur)) {return null;} else {
-		 
-			Fournisseur fournisseurToSave=fournisseurRepository.save(fournisseur);
-			FournisseurDto fournisserDtoSave=modelMapper.map(fournisseurToSave, FournisseurDto.class);
-			return fournisserDtoSave;
-		
-		
-		
-	}}
 
 	@Override
 	public List<FournisseurDto> getAllFournisseur() {
@@ -78,6 +64,25 @@ FournisseurRepository fournisseurRepository;
 		}
 		else
 		return null;
+	}
+
+	@Override
+	public FournisseurDto CreateFournisseur(FournisseurDto fournisseurDto) {
+		List<Integer> agenceIds=fournisseurDto.getAgenceIds();
+		ModelMapper modelMapper=new ModelMapper();
+		Fournisseur fournisseur =modelMapper.map(fournisseurDto, Fournisseur.class);
+
+	  if(checkifFournisseurExist(fournisseur)) {return null;} 
+		  else {
+			  if(agenceIds != null && !agenceIds.isEmpty()) {
+			List<Agence> agences=agenceRepository.findAllById(agenceIds);
+			
+			fournisseur.setAgences(agences);}
+			Fournisseur fournisseurToSave=fournisseurRepository.save(fournisseur);
+			FournisseurDto fournisserDtoSave=modelMapper.map(fournisseurToSave, FournisseurDto.class);
+			return fournisserDtoSave;
+		
+	}
 	}
 
 }

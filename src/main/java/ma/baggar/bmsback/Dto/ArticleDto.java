@@ -2,27 +2,29 @@ package ma.baggar.bmsback.Dto;
 
 import java.util.List;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ma.baggar.bmsback.Entity.Agence;
-import ma.baggar.bmsback.Entity.Fournisseur;
-import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesFamille;
-import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesSousFamilles;
-import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesUnite;
+import ma.baggar.bmsback.Entity.TvaEntity;
+
 @Data @AllArgsConstructor @NoArgsConstructor
 public class ArticleDto {
 	private Long id;
+	@NotNull
 	private String name;
+	
 	private Double purchase_price;
 	private Double selling_price;
-	private Double tva;
+	private TvaEntity tva;
 	private float Stock;
-	private boolean active;
-	private ArticlesUnite unite;
+	@NotNull
+	private boolean situation;
 //il faut ajouter not null
-	private ArticlesFamille articleFamille;
-	private ArticlesSousFamilles articleSousFamilles;
-	private List<Fournisseur> fournisseur;
-	private List<Agence> agence;
+	@NotNull
+	int id_unite;
+	int id_famille;
+	int id_sousFamille;
+	List<Integer> agenceIds;
+	List<Integer> fournisseurIds;
 }
