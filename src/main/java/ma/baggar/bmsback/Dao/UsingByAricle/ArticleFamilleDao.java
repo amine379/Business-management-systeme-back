@@ -2,12 +2,13 @@ package ma.baggar.bmsback.Dao.UsingByAricle;
 
 import java.util.List;
 
-import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesFamille;
+import ma.baggar.bmsback.Dto.UsingByArticles.ArticleFamilleDto;
+
 
 public interface ArticleFamilleDao {
-	ArticlesFamille createArticleFamille(ArticlesFamille articleFamille);
-	List<ArticlesFamille> getAllArticleFamille();
-	ArticlesFamille getArticleFamilleById(int id);
+	ArticleFamilleDto createArticleFamille(ArticleFamilleDto articleFamilleDto);
+	List<ArticleFamilleDto> getAllArticleFamille();
+	ArticleFamilleDto getArticleFamilleById(int id);
 	
 	
 

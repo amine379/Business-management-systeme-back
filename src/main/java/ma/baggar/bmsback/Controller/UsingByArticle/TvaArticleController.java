@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,7 @@ import ma.baggar.bmsback.Entity.TvaEntity;
 import ma.baggar.bmsback.Request.TvaRequest;
 import ma.baggar.bmsback.Response.TvaResponse;
 import ma.baggar.bmsback.Service.UsingByArticle.TvaArtcileService;
-
+@CrossOrigin("*")
 @RestController 
 @RequestMapping("api/tva")
 public class TvaArticleController {

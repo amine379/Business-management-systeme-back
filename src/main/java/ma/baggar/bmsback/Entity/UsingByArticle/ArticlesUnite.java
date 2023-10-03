@@ -10,12 +10,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ma.baggar.bmsback.Entity.Article;
 import ma.baggar.bmsback.Entity.UsingByArticle.ArticlesUnite;
-@Entity @AllArgsConstructor @NoArgsConstructor @Getter @Setter
+@Entity @AllArgsConstructor @NoArgsConstructor @Data
 public class ArticlesUnite {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

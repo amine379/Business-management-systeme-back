@@ -85,4 +85,10 @@ FournisseurRepository fournisseurRepository;
 	}
 	}
 
+	@Override
+	public FournisseurDto getFournisseurById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

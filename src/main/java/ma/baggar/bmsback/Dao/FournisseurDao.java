@@ -13,6 +13,7 @@ public interface FournisseurDao {
 FournisseurDto addAgencesToFournisseur(int FournisseurId,List<Integer> agenceIds);
 List<FournisseurDto> getAllFournisseur();
 FournisseurDto getFournisseurByName(String name);
+FournisseurDto getFournisseurById(int id);
 FournisseurDto getFournisseurByStatus(boolean status);
 boolean checkifFournisseurExist(Fournisseur fournisseur);
 FournisseurDto CreateFournisseur(FournisseurDto fournisseurDto);

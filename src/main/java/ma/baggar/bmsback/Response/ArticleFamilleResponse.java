@@ -1,16 +1,13 @@
-package ma.baggar.bmsback.Request;
+package ma.baggar.bmsback.Response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data @AllArgsConstructor @NoArgsConstructor
-public class UniteRequest {
-	@JsonProperty("id ")
-	private int id;
-	@NotNull
-    private String name;
-
+public class ArticleFamilleResponse {
+	@JsonProperty("id")
+private int id;
+private String name;
 }
