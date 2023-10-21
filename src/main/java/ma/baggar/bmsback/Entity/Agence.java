@@ -41,6 +41,14 @@ private String name;
 		      mappedBy = "agences")
 private List<Fournisseur> fournisseur;
 	@JsonIgnore
+	  @ManyToMany(fetch = FetchType.LAZY,
+		      cascade = {
+		          CascadeType.PERSIST,
+		          CascadeType.MERGE
+		      },
+		      mappedBy = "agences")
+private List<Client> clients;
+	@JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="Agence-articles",
 	joinColumns=@JoinColumn(name="agence_id"),

@@ -13,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -58,8 +59,9 @@ public class Article {
 	private List<Fournisseur> fournisseur;
 	@ManyToMany(mappedBy = "articles",fetch = FetchType.EAGER)
     private List<Agence> agence;
-	@ManyToMany(mappedBy = "articles",fetch = FetchType.EAGER)
-	private List<Reception> reception;
+	@OneToMany
+	private List<ReceptionDetail> details;
+
 
 	}
 	

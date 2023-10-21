@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 public class ReceptionDetail {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 public Long id;
+	@ManyToOne
 private Article article;
 private float quantite;
 private float prixTtc;

@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ public class AgenceController {
 AgenceService agenceService;
 
 	@GetMapping
+	@PreAuthorize("hasAuthority('SCOPE_ADMIN')")
 	public List<AgenceResponse> getAllAgences() {
 		ModelMapper modelMapper=new ModelMapper();
 		List<AgenceResponse> agenceResponses=new ArrayList<>();

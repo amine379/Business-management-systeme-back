@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import ma.baggar.bmsback.Service.ReceptionService;
 public class ReceptionController {
 	@Autowired
 ReceptionService receptionService;
+	@PostMapping
 	public ResponseEntity<ReceptionResponse> saveReception(@RequestBody @Valid ReceptionRequest receptionRequest){
 		ModelMapper modelMapper =new ModelMapper();
 		ReceptionDto receptionDto=modelMapper.map(receptionRequest, ReceptionDto.class);
