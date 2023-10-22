@@ -11,29 +11,26 @@ import lombok.Setter;
 import ma.baggar.bmsback.Entity.Agence;
 import ma.baggar.bmsback.Entity.Fournisseur;
 import ma.baggar.bmsback.Entity.PaymentReception;
+import ma.baggar.bmsback.Entity.ReceptionDetail;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Setter
 public class ReceptionRequest {
 	@JsonProperty("id")
 	private int id;
-	@NotNull
+	@NotNull(message = "il faut ajouter la date de document")
 	private Date dateDoc;
 	private Date dateEcheance;
-	@NotNull
-	private Double totalHt;
-	@NotNull
-	private Double totalTtc;
 	private Double Remise;
 	private String Remarque;
-	@NotNull
+	@NotNull(message = "il faut ajouter la reference de la facture")
 	private String factureRef;
 	private Double fret;
-	@NotNull
+	@NotNull (message = "il faut ajouter l'agence")
 	private Agence agence;
-	@NotNull
+	@NotNull(message = "il faut ajouter le fournisseur")
 	private Fournisseur fournisseur;
 	private PaymentReception paymentReception;
 	@NotNull
-	private List<Long> receptionDetailIds;
+	private List<ReceptionDetail> receptionDetailIds;
 
 }

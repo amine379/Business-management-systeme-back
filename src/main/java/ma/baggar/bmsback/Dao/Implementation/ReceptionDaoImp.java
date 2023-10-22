@@ -12,6 +12,7 @@ import ma.baggar.bmsback.Entity.Reception;
 import ma.baggar.bmsback.Entity.ReceptionDetail;
 import ma.baggar.bmsback.Repository.ReceptionDetailRepository;
 import ma.baggar.bmsback.Repository.ReceptionRepository;
+import ma.baggar.bmsback.exception.Reception.ReceptionExistsException;
 @Repository
 public class ReceptionDaoImp implements ReceptionDao {
 	@Autowired
@@ -19,9 +20,12 @@ ReceptionRepository receptionRepository;
 	@Autowired
 	ReceptionDetailRepository receptionDetailRepository;
 	@Override
-	public ReceptionDto saveReception(ReceptionDto receptionDto) {
+	public ReceptionDto saveReception(ReceptionDto receptionDto)  {
 		ModelMapper modelMapper=new ModelMapper();
-		List<ReceptionDetail> receptionDetails=receptionDetailRepository.findAllById(receptionDto.getReceptionDetailIds());
+		List<ReceptionDetail> receptionDetails=new ArrayList<>();
+		for(ReceptionDetail receptionDetail:receptionDto.getReceptionDetails()) {
+		receptionDetails.add(receptionDetailRepository.save(receptionDetail))	;
+			}
 		receptionDto.setReceptionDetails(receptionDetails);
 		Reception reception=modelMapper.map(receptionDto, Reception.class);
 		if(!checkIfExiste(reception)) {
@@ -29,7 +33,9 @@ ReceptionRepository receptionRepository;
 		ReceptionDto receptionDtoCreated=modelMapper.map(receptionCreated, ReceptionDto.class);
 		return receptionDtoCreated;
 		}
-		else return null;
+		else   
+			throw new ReceptionExistsException("Reception already exists");
+			
 	}
 	
 	@Override

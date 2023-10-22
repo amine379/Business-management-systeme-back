@@ -33,6 +33,7 @@ import com.nimbusds.jose.jwk.source.ImmutableSecret;
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
+	/*
 	@Value("${jwt.secret}")
 	private String secretKey;
 @Bean
@@ -52,14 +53,14 @@ public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws
 	return httpSecurity.
 			sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) //l utiloisation de jwt 
 			.csrf(csrf->csrf.disable()) //thr meaning of csrf
-			/*
-			.authorizeHttpRequests(arr->arr.requestMatchers("api/auth/login/**").permitAll())
-			.authorizeHttpRequests(ar->ar.anyRequest().authenticated())*/
+		
+			//.authorizeHttpRequests(arr->arr.requestMatchers("api/auth/login/**").permitAll())
+			//.authorizeHttpRequests(ar->ar.anyRequest().authenticated())
 			.authorizeHttpRequests((requests) -> requests
 		            .requestMatchers(new AntPathRequestMatcher("/api/auth/login/**")).permitAll()
 		            .anyRequest().authenticated()) //other URLs are only allowed authenticated users
 			//.httpBasic(Customizer.withDefaults())
-			/* .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt) */
+			//.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt) 
 			.oauth2ResourceServer(au->au.jwt(Customizer.withDefaults()))
 			.build();
 }
@@ -79,5 +80,5 @@ public AuthenticationManager authenticationManager(UserDetailsService userDetail
 	authenticationProvider.setPasswordEncoder(passwordEncoder());
 	authenticationProvider.setUserDetailsService(userDetailsService);
 	return new ProviderManager(authenticationProvider);
-}
+}*/
 }

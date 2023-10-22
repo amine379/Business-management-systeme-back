@@ -7,7 +7,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ma.baggar.bmsback.Dao.ArticleDao;
+import ma.baggar.bmsback.Dto.AgenceDto;
 import ma.baggar.bmsback.Dto.ArticleDto;
+import ma.baggar.bmsback.Dto.FournisseurDto;
 import ma.baggar.bmsback.Entity.Agence;
 import ma.baggar.bmsback.Entity.Article;
 import ma.baggar.bmsback.Entity.Fournisseur;
@@ -42,8 +44,21 @@ ArticleRepository articleRepository;
 	@Override
 	public ArticleDto createArticle(ArticleDto articleDto) {
 		ModelMapper modelMapper=new ModelMapper();
-		List<Fournisseur> fournisseurs=fournisseurRepository.findAllById(articleDto.getFournisseurIds());
-		List<Agence> agences=agenceRepository.findAllById(articleDto.getAgenceIds());
+		List<FournisseurDto> fournisseurDtos=articleDto.getFournisseurDtos();
+		List<AgenceDto> agenceDtos=articleDto.getAgenceDtos();
+		List<Integer> idsFournisseurs=new ArrayList<>();
+		List<Integer> idsAgence=new ArrayList<>();
+		
+		for(AgenceDto agenceDto:agenceDtos) {
+			idsAgence.add(agenceDto.getId());
+		}
+		
+		for(FournisseurDto fournisseurDto:fournisseurDtos) {
+			idsFournisseurs.add(fournisseurDto.getId());
+		}
+		
+		List<Fournisseur> fournisseurs=fournisseurRepository.findAllById(idsFournisseurs);
+		List<Agence> agences=agenceRepository.findAllById(idsAgence);
 		ArticlesUnite articlesUnite=articlesUniteRepository.findById(articleDto.getId_unite());
 		ArticlesFamille articlesFamille=articlesFamilleRepository.findById(articleDto.getId_famille());
 		ArticlesSousFamilles articlesSousFamilles=articlesSousFamillesRepository.findById(articleDto.getId_sousFamille());

@@ -26,11 +26,12 @@ import ma.baggar.bmsback.Service.AgenceService;
 @RestController
 @RequestMapping("api/agence")
 public class AgenceController {
+	
 	@Autowired
 AgenceService agenceService;
 
 	@GetMapping
-	@PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+	//@PreAuthorize("hasAuthority('SCOPE_ADMIN')")
 	public List<AgenceResponse> getAllAgences() {
 		ModelMapper modelMapper=new ModelMapper();
 		List<AgenceResponse> agenceResponses=new ArrayList<>();

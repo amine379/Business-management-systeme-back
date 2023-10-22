@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+/*
 @RestController
 @RequestMapping("api/auth")
 public class SecurityController {
@@ -35,7 +35,7 @@ private AuthenticationManager authenticationManager;
 	}
 	//il va genere le tokken apres authentication de user
 	@PostMapping("/login")
-	public Map<String, String> Login( String username, String password){
+	public Map<String, String> Login(@RequestParam(name = "user") String username,@RequestParam(name = "pass") String password){
 		//1-authentification recevoire requete http et verfier if user existe
 		
 		Authentication authentication= authenticationManager.authenticate(
@@ -61,4 +61,4 @@ String jwt=jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
 return Map.of("le-token-d'acce",jwt);
 				
 	}
-}
+}*/
