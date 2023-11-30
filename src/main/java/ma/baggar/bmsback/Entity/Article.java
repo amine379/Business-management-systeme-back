@@ -1,5 +1,6 @@
 package ma.baggar.bmsback.Entity;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -35,35 +36,35 @@ public class Article {
 	@Column(name = "Designation",nullable = false,unique = true)
 	private String name;
 	@Column(name = "Prix-achat")
-	private Double purchase_price;
+	private BigDecimal purchase_price;
 	@Column(name ="Prix_vente")
-	private Double selling_price;
+	private BigDecimal selling_price;
 	@ManyToOne
-	@JoinColumn(name = "tva_id",nullable = false)
+	@JoinColumn(name = "tva_id",nullable =true)
 	private TvaEntity tva;
 	@Column(nullable = true)
 	private boolean situation;
 	@Column(nullable = false)
 	private float Stock=0;
 	@ManyToOne
-	@JoinColumn(name = "unite_id",nullable = false)
+	@JoinColumn(name = "unite_id",nullable = true)
 	private ArticlesUnite unite;
 	@ManyToOne
-	@JoinColumn(name = "articleFamille_id",nullable = false)
+	@JoinColumn(name = "articleFamille_id",nullable = true)
 	private ArticlesFamille articleFamille;
 	@ManyToOne 
-	@JoinColumn(name = "articleSousFamille_id",nullable = false)
-	private ArticlesSousFamilles articleSousFamilles;
+	@JoinColumn(name = "articleSousFamille_id",nullable = true)
+	private ArticlesSousFamilles articleSousFamille;
 	@ManyToMany (fetch = FetchType.EAGER)
 	@JoinTable(name="fournisseur-articles")
 	private List<Fournisseur> fournisseur;
 	@ManyToMany(mappedBy = "articles",fetch = FetchType.EAGER)
     private List<Agence> agence;
-	@OneToMany
+	@OneToMany(mappedBy = "article")
 	private List<ReceptionDetail> details;
 
 
-	}
+}
 	
 	
 	

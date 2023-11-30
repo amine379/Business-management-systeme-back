@@ -1,5 +1,5 @@
 package ma.baggar.bmsback.security;
-
+/*
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/*
+
 @RestController
-@RequestMapping("api/auth")
+@RequestMapping("api/auth")*/
 public class SecurityController {
-	@Autowired
+/*	@Autowired
 private AuthenticationManager authenticationManager;
 	@Autowired
 	private JwtEncoder jwtEncoder;
@@ -60,5 +60,5 @@ private AuthenticationManager authenticationManager;
 String jwt=jwtEncoder.encode(jwtEncoderParameters).getTokenValue();	
 return Map.of("le-token-d'acce",jwt);
 				
-	}
-}*/
+	}*/
+}

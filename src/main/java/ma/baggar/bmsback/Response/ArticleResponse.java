@@ -20,9 +20,9 @@ public class ArticleResponse {
 	private String name;
 	private Double purchase_price;
 	private Double selling_price;
-	private TvaEntity tva;
+	private TvaResponse tva;
 	private float Stock;
-	private boolean active;
+	private boolean situation;
 	private ArticlesUnite unite;
 	private ArticlesFamille articleFamille;
 	private ArticlesSousFamilles articleSousFamilles;

@@ -15,10 +15,10 @@ TvaRepository tvaRepository;
 	@Override
 	public TvaEntity createTva(TvaEntity tvaEntity) {
 		if(!checkIfExiste(tvaEntity)) {
-			TvaEntity tvaEntityCreated= tvaRepository.save(tvaEntity);
-			return tvaEntityCreated;
+			return tvaRepository.save(tvaEntity);
+
 		}
-		return null;
+		throw new RuntimeException("Tva deja Existe");
 	}
 
 	@Override

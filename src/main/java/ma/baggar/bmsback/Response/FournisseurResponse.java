@@ -15,12 +15,11 @@ public class FournisseurResponse {
 	private Long id;
 	private String nom;
 	private Long ice;
-	private String Adress;
+	private String adress;
 	private Double telephone;
-	private String countrie;
 	private Boolean situation;
 	private Double resteaPayer;
-	private List<Reception> Receptions;
+	private List<Reception> receptions;
 	private List<Article> articles;
 	private List<Agence> agences;
 }

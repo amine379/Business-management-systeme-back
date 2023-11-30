@@ -58,4 +58,7 @@ private List<Article> articles;
 	@JsonIgnore
 	@OneToMany(mappedBy = "agence",fetch = FetchType.LAZY)
 private List<Reception> receptions;
+	public Agence(String name){
+		this.name=name;
+	}
 }

@@ -1,6 +1,6 @@
 package ma.baggar.bmsback.security;
 
-import javax.crypto.spec.SecretKeySpec;
+/* javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,9 +31,9 @@ import com.nimbusds.jose.jwk.source.ImmutableSecret;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled = true)*/
 public class SecurityConfiguration {
-	/*
+/*
 	@Value("${jwt.secret}")
 	private String secretKey;
 @Bean

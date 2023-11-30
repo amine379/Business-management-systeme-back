@@ -16,7 +16,7 @@ public class ClientRequest {
 	@NotNull
 	private String nom;
 	@NotNull
-	private Long ice;
+	private String ice;
 	private Boolean situation=true;
 	private String adress;
 	private Double telephone;

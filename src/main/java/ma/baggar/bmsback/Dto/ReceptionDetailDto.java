@@ -12,5 +12,5 @@ public Long id;
 private Article article;
 private float quantite;
 private float prixTtc;
-private Reception reception;
+private ReceptionDto reception;
 }

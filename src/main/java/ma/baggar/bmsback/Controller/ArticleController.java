@@ -4,29 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import ma.baggar.bmsback.Dto.ArticleDto;
+import ma.baggar.bmsback.Dto.Shared.ApiResponsePagination;
+import ma.baggar.bmsback.Entity.Article;
+import ma.baggar.bmsback.Repository.ArticleRepository;
 import ma.baggar.bmsback.Request.ArticleRequest;
 import ma.baggar.bmsback.Response.ArticleResponse;
 import ma.baggar.bmsback.Service.ArticleService;
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("api/article")
 public class ArticleController {
 	@Autowired
 	ArticleService articleService;
-	@GetMapping
+	@Autowired
+	ArticleRepository articleRepository;
+	@Autowired
+	ModelMapper modelMapper;
+
+	 @GetMapping
 public List<ArticleResponse> getAllArticles(){
-	ModelMapper modelMapper=new ModelMapper();
 	List<ArticleResponse> articleResponses=new ArrayList<>();
 	List<ArticleDto> articleDtos=articleService.getAllArticles();
 	for(ArticleDto articleDto:articleDtos) {
@@ -35,6 +38,22 @@ public List<ArticleResponse> getAllArticles(){
 	}
 	return articleResponses;
 }
+
+	 @GetMapping("/pagination/{offset}/{pageSize}")
+	    public  List<ArticleResponse> getProductsWithPagination(@RequestParam int offset, @PathVariable int pageSize) {
+		 List<ArticleResponse> articleResponses=new ArrayList<>();
+	        List<ArticleDto>  articleDtos= articleService.getArticlesWithPagination(offset, pageSize);
+			for(ArticleDto article:articleDtos){
+				articleResponses.add(modelMapper.map(article,ArticleResponse.class));
+			}
+	        return articleResponses;}
+	
+	
+	/*@GetMapping
+	public ApiResponsePagination<List<Article>> getAllArticles(){
+		List<Article> allArticles=articleRepository.findAll();
+		return new ApiResponsePagination<List<Article>>(allArticles.size(), allArticles);
+	}*/
 	@GetMapping(path="/{nom}")
 	public ResponseEntity<ArticleResponse>  gatArticleByName(@PathVariable String nom) {
 		ModelMapper modelMapper=new ModelMapper();
@@ -51,11 +70,10 @@ public List<ArticleResponse> getAllArticles(){
 	}
 
 @PostMapping
-public ResponseEntity<ArticleResponse> creteArticle(@RequestBody @Valid ArticleRequest articleRequest){
-ModelMapper modelmapper=new ModelMapper();
-ArticleDto articleDto=modelmapper.map(articleRequest, ArticleDto.class);
+public ResponseEntity<ArticleResponse> creteArticle(@RequestBody ArticleRequest articleRequest){
+ArticleDto articleDto=modelMapper.map(articleRequest, ArticleDto.class);
 articleDto=articleService.createArticle(articleDto);
-ArticleResponse articleResponse=modelmapper.map(articleDto, ArticleResponse.class);
+ArticleResponse articleResponse=modelMapper.map(articleDto, ArticleResponse.class);
 return new ResponseEntity<ArticleResponse>(articleResponse , HttpStatus.CREATED) ;
 }
 

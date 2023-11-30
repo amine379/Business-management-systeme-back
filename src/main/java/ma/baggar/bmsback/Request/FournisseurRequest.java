@@ -20,12 +20,12 @@ public class FournisseurRequest {
 	private String nom;
 @NotNull 
 	private Long ice;
-	private String Adress;
+	private String adress;
 	private Double telephone;
-	private String countrie;
 	private Boolean situation;
 	private Double resteaPayer;
-	public List<Integer> agenceIds;
+	List<Agence> agences;
+
 	
 	
 }

@@ -2,7 +2,11 @@ package ma.baggar.bmsback.Dao.Implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import ma.baggar.bmsback.exception.Facture.FactureNotFoundException;
+import ma.baggar.bmsback.exception.Fournisseur.FournisseurAlreadyExist;
+import ma.baggar.bmsback.exception.Fournisseur.FournisseurNotFound;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,6 +23,8 @@ public class FournisseurDaoImp implements FournisseurDao{
 FournisseurRepository fournisseurRepository;
 	@Autowired
 	AgenceRepository agenceRepository;
+	@Autowired
+	ModelMapper modelMapper;
 
 	@Override
 	public List<FournisseurDto> getAllFournisseur() {
@@ -34,8 +40,11 @@ FournisseurRepository fournisseurRepository;
 
 	@Override
 	public FournisseurDto getFournisseurByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		Fournisseur fournisseur=fournisseurRepository.findByNom(name);
+	if(fournisseur!=null){
+		return modelMapper.map(fournisseur,FournisseurDto.class);
+	}
+		throw  new FournisseurNotFound("Fournisseur Not found With name"+name);
 	}
 
 	@Override
@@ -63,32 +72,46 @@ FournisseurRepository fournisseurRepository;
 			return fournisseurDto;
 		}
 		else
-		return null;
+		throw  new FournisseurNotFound("Fournisseur Not Found with id"+FournisseurId);
 	}
 
 	@Override
 	public FournisseurDto CreateFournisseur(FournisseurDto fournisseurDto) {
-		List<Integer> agenceIds=fournisseurDto.getAgenceIds();
 		ModelMapper modelMapper=new ModelMapper();
 		Fournisseur fournisseur =modelMapper.map(fournisseurDto, Fournisseur.class);
 
-	  if(checkifFournisseurExist(fournisseur)) {return null;} 
+	  if(checkifFournisseurExist(fournisseur)) {throw  new FournisseurAlreadyExist("le fournisseur deja existe"+fournisseurDto.getNom());}
 		  else {
-			  if(agenceIds != null && !agenceIds.isEmpty()) {
-			List<Agence> agences=agenceRepository.findAllById(agenceIds);
-			
-			fournisseur.setAgences(agences);}
+			  if(!fournisseurDto.getAgences().isEmpty()) {
+				  List<Agence> agences=
+						  fournisseurDto.getAgences()
+								  .stream()
+								  .map(agenceDto -> modelMapper.map(agenceDto,Agence.class))
+								  .collect(Collectors.toList());
+			fournisseur.setAgences(agences);
+			  }
 			Fournisseur fournisseurToSave=fournisseurRepository.save(fournisseur);
-			FournisseurDto fournisserDtoSave=modelMapper.map(fournisseurToSave, FournisseurDto.class);
-			return fournisserDtoSave;
+	return  modelMapper.map(fournisseurToSave, FournisseurDto.class);
+
 		
 	}
 	}
 
 	@Override
 	public FournisseurDto getFournisseurById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Fournisseur fournisseur=fournisseurRepository.findById(id);
+		try{
+			if(fournisseur!=null){
+				return modelMapper.map(fournisseur,FournisseurDto.class);
+			}
+			else {
+				throw new FactureNotFoundException("fournisseur with id:"+id+" Not found");
+			}
+		}
+		catch (Exception e){
+			throw new RuntimeException("probleme de getFournisseurByid et fournisseur with id"+id+" existee");
+		}
+
 	}
 
 }

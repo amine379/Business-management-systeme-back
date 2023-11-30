@@ -28,10 +28,9 @@ public class ArticleRequest {
 	private TvaEntity tva;
 	private float Stock;
 	private boolean active;
-	@NotNull
+	//@NotNull
 	private ArticlesUnite unite;
 //il faut ajouter not null
-	@NotNull
 	private ArticlesFamille articleFamille;
 	private ArticlesSousFamilles articleSousFamilles;
 	private List<Fournisseur> fournisseur;

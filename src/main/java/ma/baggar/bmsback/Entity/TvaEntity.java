@@ -19,9 +19,9 @@ public class TvaEntity {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 private int id;
 	@Column(nullable = false)
-private String code="20%";
+private String code;
 	@Column(nullable = false)
-private Double value=0.2;
+private Double value;
 	@OneToMany (mappedBy = "tva",cascade = CascadeType.ALL)
 	private List<Article> articles;
 }

@@ -17,9 +17,8 @@ public class FournisseurDto {
 	private String adress;
 	private Double telephone;
 	private Double resteaPayer;
-	private String countrie;
-	private List<Article> articles;
-	private List<Reception> Receptions;
-	private List<Agence> agences;
-	private List<Integer> agenceIds;
+	private List<ArticleDto> article;
+	private List<ReceptionDto> reception;
+	private List<AgenceDto> agences;
+
 }

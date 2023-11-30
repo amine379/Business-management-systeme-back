@@ -11,7 +11,7 @@ import lombok.Setter;
 public class AgenceDto {
 	private int id;
 	private String name;
-	private List<FournisseurDto> fournisseurDtos;
-	private List<ArticleDto> articlesDtos;
-	private List<ReceptionDto> receptionsDtos;
+	private List<FournisseurDto> fournisseur;
+	private List<ArticleDto> article;
+	private List<ReceptionDto> reception;
 }

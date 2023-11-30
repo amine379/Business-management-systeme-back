@@ -10,7 +10,7 @@ import ma.baggar.bmsback.Entity.Agence;
 public class ClientResponse {
 	private int id;
 	private String nom;
-	private Long ice;
+	private String ice;
 	private Boolean situation=true;
 	private String adress;
 	private Double telephone;

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import ma.baggar.bmsback.Dao.ArticleDao;
 import ma.baggar.bmsback.Dto.ArticleDto;
 import ma.baggar.bmsback.Service.ArticleService;
@@ -32,5 +31,21 @@ ArticleDao articleDao;
 		// TODO Auto-generated method stub
 		return articleDao.gatArticleById(id);
 	}
+	@Override
+	public List<ArticleDto> getArticlesWithPagination(int offset, int pageSize) {
+		// TODO Auto-generated method stub
+		return articleDao.getArticlesWithPagination(offset, pageSize);
+	}
+	@Override
+	public List<ArticleDto> getArticleWithPaginationSorting(int offset, int pageSize, String field) {
+		// TODO Auto-generated method stub
+		return articleDao.getArticleWithPaginationSorting(offset, pageSize, field);
+	}
+	@Override
+	public List<ArticleDto> getArticleWithSorting(String field) {
+		
+		return articleDao.getArticleWithSorting(field);
+	}
+
 
 }

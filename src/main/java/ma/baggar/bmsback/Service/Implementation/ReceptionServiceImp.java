@@ -1,9 +1,12 @@
 package ma.baggar.bmsback.Service.Implementation;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +18,15 @@ import ma.baggar.bmsback.Service.ReceptionService;
 public class ReceptionServiceImp implements ReceptionService {
 	@Autowired
 ReceptionDao receptionDao;
+	@Autowired
+	ModelMapper modelMapper;
 	@Override
 	public ReceptionDto saveReception(ReceptionDto receptionDto) {
-		List<ReceptionDetail> receptionDetails=receptionDto.getReceptionDetails();
+		List<ReceptionDetail> receptionDetails=receptionDto.getReceptionDetails().stream()
+				.map(receptionDetailDto->modelMapper.map
+						(receptionDetailDto,ReceptionDetail.class))
+				.collect(Collectors.toList());
+
 		for(ReceptionDetail receptionDetail:receptionDetails) {
 			receptionDetail.setPrixTtc(
 					getPrixTtcOfArticle(
@@ -33,6 +42,7 @@ ReceptionDao receptionDao;
 				calculePrixTtc(getListOfPrixTtcFromReceptionDetails(receptionDetails),
 						receptionDto.getFret(), receptionDto.getRemise()));
 		
+		
 		return receptionDao.saveReception(receptionDto);
 	}
 	@Override
@@ -41,36 +51,39 @@ ReceptionDao receptionDao;
 		return receptionDao.getallReception();
 	}
 	@Override
-	public double getPrixTtcOfArticle(double prixAchat, float quantite, double tvaValue) {
-		return ((prixAchat*quantite)*(1+tvaValue));
+	public BigDecimal getPrixTtcOfArticle(BigDecimal prixAchat, float quantite, double tvaValue) {
+
+		BigDecimal tvaBigDecimal = BigDecimal.valueOf(tvaValue);
+		BigDecimal qteBigDecimal = BigDecimal.valueOf(quantite);
+		return prixAchat.multiply(qteBigDecimal).multiply(BigDecimal.ONE.add(tvaBigDecimal));
 	}
 	@Override
-	public double calculePrixHt(List<Double> prixHt) {
-		double prixHtTotal=0;
-		for(double prix:prixHt) {
-			prixHtTotal+=prix;
+	public BigDecimal calculePrixHt(List<BigDecimal> prixHt) {
+		BigDecimal prixHtTotal=BigDecimal.ZERO;
+		for(BigDecimal prix:prixHt) {
+			prixHtTotal=prixHtTotal.add(prix);
 		}
 		return prixHtTotal;
 	}
 	@Override
-	public double calculePrixTtc(List<Double> prixTtc, double fret, double remise) {
-		double prixTtcTotal=0;
-		for(double prix:prixTtc) {
-			prixTtcTotal+=prix;
+	public BigDecimal calculePrixTtc(List<BigDecimal> prixTtc, BigDecimal fret, BigDecimal remise) {
+		BigDecimal prixTtcTotal=BigDecimal.ZERO;
+		for(BigDecimal prix:prixTtc) {
+			prixTtcTotal=prixTtcTotal.add(prix);
 		}
-		return prixTtcTotal+fret-remise;
+		return( prixTtcTotal.add(fret)).subtract(remise);
 	}
 	@Override
-	public List<Double> getListOfPrixHtFromReceptionDetails(List<ReceptionDetail> receptionDetails) {
-		List<Double> prixHt=new ArrayList<>();
+	public List<BigDecimal> getListOfPrixHtFromReceptionDetails(List<ReceptionDetail> receptionDetails) {
+		List<BigDecimal> prixHt=new ArrayList<>();
 		for(ReceptionDetail receptionDetail:receptionDetails) {
 		prixHt.add(receptionDetail.getArticle().getPurchase_price());
 		}
 		return prixHt;
 	}
 	@Override
-	public List<Double> getListOfPrixTtcFromReceptionDetails(List<ReceptionDetail> receptionDetails) {
-		List<Double> prixTtc=new ArrayList<>();
+	public List<BigDecimal> getListOfPrixTtcFromReceptionDetails(List<ReceptionDetail> receptionDetails) {
+		List<BigDecimal> prixTtc=new ArrayList<>();
 		for(ReceptionDetail receptionDetail:receptionDetails) {
 			prixTtc.add(receptionDetail.getPrixTtc());
 		}

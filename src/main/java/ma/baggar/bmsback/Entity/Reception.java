@@ -2,6 +2,7 @@ package ma.baggar.bmsback.Entity;
 
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -40,13 +41,13 @@ private Long id;
 	@Column(name = "total-TTC" ,nullable = false)
 	private Double totalTtc;
 	@Column(nullable = true)
-	private Double Remise;
+	private BigDecimal remise;
 	@Column(nullable = true)
 	private String Remarque;
 	@Column(unique = true)
 	private String factureRef;
 	@Column(nullable = true)
-	private Double fret;
+	private BigDecimal fret;
 	@ManyToOne
 	@JoinColumn(name = "agence_id",nullable = false)
 	private Agence agence;
@@ -58,13 +59,6 @@ private Long id;
 	private PaymentReception paymentReception;
 	@OneToMany
 	private List<ReceptionDetail> receptionDetails;
-	
-	
-//	@ManyToMany(fetch = FetchType.EAGER)
-//	@JoinTable(name="Reception-articles",
-//	joinColumns=@JoinColumn(name="reception_id"),
-//	inverseJoinColumns=@JoinColumn(name="article_id"))
-//	private List<Article> articles;
-//	@Column(nullable = false)
-//	private List<Double> quantite=new ArrayList<>();
+
+
 }
