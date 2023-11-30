@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import ma.baggar.bmsback.Dto.ReceptionDetailDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,28 +23,30 @@ ReceptionDao receptionDao;
 	ModelMapper modelMapper;
 	@Override
 	public ReceptionDto saveReception(ReceptionDto receptionDto) {
-		List<ReceptionDetail> receptionDetails=receptionDto.getReceptionDetails().stream()
-				.map(receptionDetailDto->modelMapper.map
-						(receptionDetailDto,ReceptionDetail.class))
-				.collect(Collectors.toList());
-
-		for(ReceptionDetail receptionDetail:receptionDetails) {
+		for(ReceptionDetailDto receptionDetail:receptionDto.getReceptionDetails()) {
+			if(!Float.isNaN(receptionDetail.getQuantite())){
 			receptionDetail.setPrixTtc(
 					getPrixTtcOfArticle(
 							receptionDetail.getArticle().getPurchase_price(),
 							receptionDetail.getQuantite() ,
-							receptionDetail.getArticle().getTva().getValue()));
+							receptionDetail.getArticle().getTva().getValue()
+					                   )
+			                           );
+			                                               }
+			else {
+				throw new RuntimeException("la valeur de quantité ne doit pas etre null id:"+receptionDetail.getId());
+			}
 					
 		}
 
-		receptionDto.setReceptionDetails(receptionDetails);
-		receptionDto.setTotalHt(calculePrixHt(getListOfPrixHtFromReceptionDetails(receptionDetails)));
+		receptionDto.setReceptionDetails(receptionDto.getReceptionDetails());
+		receptionDto.setTotalHt(calculePrixHt(getListOfPrixHtFromReceptionDetails(receptionDto.getReceptionDetails())));
 		receptionDto.setTotalTtc(
-				calculePrixTtc(getListOfPrixTtcFromReceptionDetails(receptionDetails),
+				calculePrixTtc(getListOfPrixTtcFromReceptionDetails(receptionDto.getReceptionDetails()),
 						receptionDto.getFret(), receptionDto.getRemise()));
 		
 		
-		return receptionDao.saveReception(receptionDto);
+		return receptionDao.saveReceptionWithReceptionDetails(receptionDto);
 	}
 	@Override
 	public List<ReceptionDto> getAllReception() {
@@ -74,17 +77,17 @@ ReceptionDao receptionDao;
 		return( prixTtcTotal.add(fret)).subtract(remise);
 	}
 	@Override
-	public List<BigDecimal> getListOfPrixHtFromReceptionDetails(List<ReceptionDetail> receptionDetails) {
+	public List<BigDecimal> getListOfPrixHtFromReceptionDetails(List<ReceptionDetailDto> receptionDetails) {
 		List<BigDecimal> prixHt=new ArrayList<>();
-		for(ReceptionDetail receptionDetail:receptionDetails) {
+		for(ReceptionDetailDto receptionDetail:receptionDetails) {
 		prixHt.add(receptionDetail.getArticle().getPurchase_price());
 		}
 		return prixHt;
 	}
 	@Override
-	public List<BigDecimal> getListOfPrixTtcFromReceptionDetails(List<ReceptionDetail> receptionDetails) {
+	public List<BigDecimal> getListOfPrixTtcFromReceptionDetails(List<ReceptionDetailDto> receptionDetails) {
 		List<BigDecimal> prixTtc=new ArrayList<>();
-		for(ReceptionDetail receptionDetail:receptionDetails) {
+		for(ReceptionDetailDto receptionDetail:receptionDetails) {
 			prixTtc.add(receptionDetail.getPrixTtc());
 		}
 		return prixTtc;

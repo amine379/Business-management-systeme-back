@@ -13,16 +13,7 @@ import java.util.Optional;
 
 @SpringBootApplication
 public class BmsBackApplication {
-	@Autowired
-ClientRepository clientRepository;
-	@Autowired
-	ModePaymentRepository modePaymentRepository;
-	@Autowired
-	AgenceRepository agenceRepository;
-	@Autowired
-	ArticleRepository articleRepository;
-	@Autowired
-	TvaRepository tvaRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(BmsBackApplication.class, args);
 	}

@@ -34,15 +34,20 @@ public class ReceptionDto {
 					  BigDecimal fret,
 					  AgenceDto agence,
 					  FournisseurDto fournisseur,
-					  PaymentReception paymentReception) {
+					  PaymentReception paymentReception,
+						 BigDecimal totalHt,
+	                  BigDecimal totalTtc) {
 		this.dateDoc = dateDoc;
 		this.dateEcheance = dateEcheance;
 		this.remise = remise;
-		Remarque = remarque;
+		this.Remarque = remarque;
 		this.factureRef = factureRef;
 		this.fret = fret;
 		this.agence = agence;
 		this.fournisseur = fournisseur;
 		this.paymentReception = paymentReception;
+		this.totalHt=totalHt;
+		this.totalTtc=totalTtc;
+
 	}
 }

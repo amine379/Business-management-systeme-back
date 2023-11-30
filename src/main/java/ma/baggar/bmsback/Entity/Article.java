@@ -54,7 +54,7 @@ public class Article {
 	private ArticlesFamille articleFamille;
 	@ManyToOne 
 	@JoinColumn(name = "articleSousFamille_id",nullable = true)
-	private ArticlesSousFamilles articleSousFamille;
+	private ArticlesSousFamilles articleSousFamilles;
 	@ManyToMany (fetch = FetchType.EAGER)
 	@JoinTable(name="fournisseur-articles")
 	private List<Fournisseur> fournisseur;

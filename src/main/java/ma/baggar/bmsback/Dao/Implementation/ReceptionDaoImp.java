@@ -34,24 +34,25 @@ public class ReceptionDaoImp implements ReceptionDao {
 		ReceptionDto receptionDtoBeforAddReceptionDetails=new ReceptionDto(
 				receptionDto.getDateDoc(),receptionDto.getDateEcheance(),receptionDto.getRemise(),
 				receptionDto.getRemarque(),receptionDto.getFactureRef(),receptionDto.getFret(),
-				receptionDto.getAgence(),receptionDto.getFournisseur(),receptionDto.getPaymentReception()
+				receptionDto.getAgence(),receptionDto.getFournisseur(),receptionDto.getPaymentReception(),
+                receptionDto.getTotalHt(),receptionDto.getTotalTtc()
 		);
 		Reception reception=modelMapper.map(receptionDtoBeforAddReceptionDetails,Reception.class);
 		Reception receptionCreated=receptionRepository.save(reception);
-		ReceptionDto receptionDtoCreated=modelMapper.map(receptionCreated,ReceptionDto.class);
-		BigDecimal totalHtFacture = BigDecimal.ZERO;
+		 return modelMapper.map(receptionCreated,ReceptionDto.class);
+	/*BigDecimal totalHtFacture = BigDecimal.ZERO;
 		BigDecimal totalTtcFacture = BigDecimal.ZERO;
 		for(ReceptionDetailDto receptionDetail:receptionDto.getReceptionDetails()){
 			if(Float.isNaN(receptionDetail.getQuantite())){throw new RuntimeException("quantité est un champs obligatoire");}
 			receptionDetail.setReception(receptionDtoCreated);
 			receptionDetail.setPrixTtc(cal);
 
-		}
+		}*/
 
 
 
 		/*=====================yarabbbbak==================*/
-		for(ReceptionDetail receptionDetail:receptionDto.getReceptionDetails()) {
+		/*for(ReceptionDetail receptionDetail:receptionDto.getReceptionDetails()) {
 		receptionDetails.add(receptionDetailRepository.save(receptionDetail));
 			}
 		receptionDto.setReceptionDetails(receptionDetails);
@@ -62,11 +63,31 @@ public class ReceptionDaoImp implements ReceptionDao {
 		return receptionDtoCreated;
 		}
 		else   
-			throw new ReceptionExistsException("Reception already exists");
+			throw new ReceptionExistsException("Reception already exists");*/
 			
 	}
-	
-	@Override
+
+    @Override
+    public ReceptionDto saveReceptionWithReceptionDetails(ReceptionDto receptionDto) {
+     ReceptionDto receptionDto1= saveReception(receptionDto);
+     Reception reception=receptionRepository.findById(receptionDto1.getId()).get();
+     List<ReceptionDetail> receptionDetails=new ArrayList<>();
+     if(receptionDto1!=null){
+         for(ReceptionDetailDto receptionDetailDto:receptionDto.getReceptionDetails()){
+             receptionDetailDto.setReception(receptionDto1);
+            ReceptionDetail receptionDetailCreated=
+                    receptionDetailRepository.save(modelMapper.map(receptionDetailDto,ReceptionDetail.class));
+            receptionDetails.add(receptionDetailCreated);
+         }
+         reception.setReceptionDetails(receptionDetails);
+         Reception receptionCretedWithReceptionDetails=receptionRepository.save(reception);
+         return  modelMapper.map(receptionCretedWithReceptionDetails,ReceptionDto.class);
+     }
+else {throw new RuntimeException("il faut create reception d'abord sans receptiondetails then creat receptionDetails id reception"+receptionDto.getId());
+}
+    }
+
+    @Override
 	public boolean checkIfExiste(Reception reception) {
 		List<Reception> fournisseurs=receptionRepository.findByFournisseur(reception.getFournisseur());
 		List<Reception> dateDoc=receptionRepository.findByDateDoc(reception.getDateDoc());
